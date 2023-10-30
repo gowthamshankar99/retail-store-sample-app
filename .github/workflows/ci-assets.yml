@@ -22,20 +22,11 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
 
-    - name: Set up QEMU
-      id: qemu
-      uses: docker/setup-qemu-action@v2
+    - name: Build image
+      uses: mamezou-tech/buildpacks-action@master
       with:
-        image: tonistiigi/binfmt:latest
-        platforms: all
-
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Expose GitHub Runtime
-      uses: crazy-max/ghaction-github-runtime@v2
-        
-    - name: Build container image
-      run: |
-        scripts/build-image.sh -s assets -t ci --actions-cache
+        image: 'checkout-app'
+        tag: '${{github.sha}}'
+        path: 'src/checkout'
+        builder: 'gcr.io/paketo-buildpacks/builder:base'
+        env: 'TEST=TEST'

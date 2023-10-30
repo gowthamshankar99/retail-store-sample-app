@@ -37,7 +37,7 @@ jobs:
     - name: Build image
       uses: mamezou-tech/buildpacks-action@master
       with:
-        image: 'test-app'
+        image: 'orders-app'
         tag: '${{github.sha}}'
         path: 'src/orders'
         builder: 'gcr.io/paketo-buildpacks/builder:base'
