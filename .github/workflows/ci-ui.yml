@@ -42,3 +42,26 @@ jobs:
         path: 'src/ui'
         builder: 'gcr.io/paketo-buildpacks/builder:base'
         env: 'TEST=TEST'
+
+    - name: Scan Image
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'ui-app:${{github.sha}}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL'        
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: us-east-1         
+
+    - name: Deploy to AWS
+      run: |
+        # Your AWS CLI commands go here
+        aws s3 ls 
