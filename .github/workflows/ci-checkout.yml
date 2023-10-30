@@ -36,6 +36,6 @@ jobs:
       with:
         image: 'test-app'
         tag: '${{github.sha}}'
-        path: 'src/'
+        path: 'src/checkout'
         builder: 'gcr.io/paketo-buildpacks/builder:base'
         env: 'TEST=TEST'
