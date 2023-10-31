@@ -25,7 +25,7 @@ jobs:
     - name: Build image
       uses: mamezou-tech/buildpacks-action@master
       with:
-        image: 'checkout-app'
+        image: 'assets-app'
         tag: '${{github.sha}}'
         path: 'src/assets'
         builder: 'gcr.io/paketo-buildpacks/builder:base'
