@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: public.ecr.aws/aws-containers/retail-store-sample-orders
+  repository: public.ecr.aws/i5t0v8v6/orders
   pullPolicy: IfNotPresent
-  tag: 0.5.0
+  tag: eb84c692dd60fb7e66a48f24372475b61d280fe0
 
 imagePullSecrets: []
 nameOverride: ""
