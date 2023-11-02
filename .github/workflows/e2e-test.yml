@@ -115,6 +115,10 @@ jobs:
               nodePort: 30000
         EOF
 
+    - name: commands 
+      run: |  
+         kubectl get pods -A
+
     - name: Test
       run: |
         bash scripts/e2e-kind.sh
