@@ -41,7 +41,7 @@ jobs:
         tag: '${{github.sha}}'
         path: 'src/cart'
         builder: 'gcr.io/paketo-buildpacks/builder:base'
-        env: 'TEST=TEST'
+        env: 'JAVA_OPTS=-XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom'
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
