@@ -63,6 +63,17 @@ jobs:
 #      run: |
 #        scripts/build-image.sh -r 'public.ecr.aws/aws-containers' -t e2e
 
+
+    - name: pull images locally 
+      run: |
+         docker pull public.ecr.aws/i5t0v8v6/assets:eb84c692dd60fb7e66a48f24372475b61d280fe0
+         docker pull public.ecr.aws/i5t0v8v6/cart:eb84c692dd60fb7e66a48f24372475b61d280fe0
+         docker pull public.ecr.aws/i5t0v8v6/catalog:eb84c692dd60fb7e66a48f24372475b61d280fe0
+         docker pull public.ecr.aws/i5t0v8v6/checkout:eb84c692dd60fb7e66a48f24372475b61d280fe0
+         docker pull public.ecr.aws/i5t0v8v6/orders:eb84c692dd60fb7e66a48f24372475b61d280fe0
+         docker pull public.ecr.aws/i5t0v8v6/ui:eb84c692dd60fb7e66a48f24372475b61d280fe0 
+      
+
     - name: Setup helmfile
       uses: mamezou-tech/setup-helmfile@v1.2.0
 
@@ -73,8 +84,8 @@ jobs:
         version: v0.17.0
         
     - name: Deploy
-      env:
-        IMAGE_TAG: e2e
+#      env:
+#        IMAGE_TAG: e2e
       run: |
         kind load docker-image public.ecr.aws/i5t0v8v6/assets:eb84c692dd60fb7e66a48f24372475b61d280fe0
         kind load docker-image public.ecr.aws/i5t0v8v6/cart:eb84c692dd60fb7e66a48f24372475b61d280fe0
