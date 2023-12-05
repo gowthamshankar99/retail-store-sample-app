@@ -43,6 +43,26 @@ jobs:
         builder: 'gcr.io/paketo-buildpacks/builder:base'
         env: 'JAVA_OPTS=-XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom'
 
+    - name: Scan Image
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'cart-app:${{github.sha}}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL'   
+
+    - name: Generate SBOM
+      uses: anchore/sbom-action@v0
+      with:
+        image: 'cart-app:${{github.sha}}'        
+        
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3.1.1
+      with:
+        cosign-release: main     
+        
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -50,11 +70,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1         
-
-    - name: Deploy to AWS
-      run: |
-        # Your AWS CLI commands go here
-        aws s3 ls 
 
     - name: Login to Amazon ECR
       id: login-ecr
